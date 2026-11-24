@@ -69,8 +69,8 @@ h1 {
 .card .avatar {
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+    height: auto;            /* 依原圖比例完整顯示，不裁切 */
+    object-fit: contain;
     border-radius: 10px;
     margin-bottom: 15px;
     background: rgba(0, 0, 0, 0.35);
