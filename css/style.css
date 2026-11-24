@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    font-size: 1.2rem;
+    font-family: "Noto Serif TC", Georgia, serif;
+    color: #f5efe6;
+    background:
+        linear-gradient(rgba(25, 18, 12, 0.6), rgba(25, 18, 12, 0.85)),
+        url("../images/f1.jpg") center / cover no-repeat fixed #19120c;
+}
+::selection { background: #ffdd00; color: #1e1610; }
+
+section {
+    width: 90vw;
+    min-height: 100vh;
+    margin: 40px auto;
+    padding: 30px;
+    box-sizing: border-box;
+    border: 2px solid rgba(212, 188, 55, 0.6);
+    border-radius: 20px;
+    background: rgba(25, 18, 12, 0.35);
+    backdrop-filter: blur(6px);
+    text-align: center;
+}
+h1 {
+    color: #d4bf37;
+    letter-spacing: 8px;
+    font-size: clamp(2rem, 5vw, 4rem);
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+    margin: 10px 0 10px;
+}
+.hint { margin: 0 0 30px; opacity: 0.7; font-size: 1rem; }
+
+/* ---------- 抽卡按鈕 ---------- */
+#drawBtn {
+    padding: 12px 40px;
+    font: inherit;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    color: #f5efe6;
+    border: 1px solid #d4cf37;
+    border-radius: 999px;
+    background: rgba(212, 55, 149, 0.25);
+    cursor: pointer;
+    transition: 0.3s;
+}
+#drawBtn:hover:not(:disabled) { background: rgba(207, 212, 55, 0.55); transform: translateY(-2px); }
+#drawBtn:disabled { opacity: 0.5; cursor: wait; }
+#drawBtn:focus-visible { outline: 3px solid #ffdd00; outline-offset: 3px; }
+
+/* ---------- 抽到的卡片 ---------- */
+.stage { margin: 40px auto 20px; min-height: 480px; display: flex; justify-content: center; }
+
+.card {
+    position: relative;
+    width: min(320px, 100%);
+    box-sizing: border-box;
+    padding: 20px;
+    line-height: 2rem;
+    border: 1px solid rgba(212, 212, 55, 0.6);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    animation: reveal 0.7s cubic-bezier(.2, .8, .2, 1);
+}
+@keyframes reveal {
+    from { transform: rotateY(90deg) scale(0.8); opacity: 0; }
+    to   { transform: none; opacity: 1; }
+}
+.card .avatar {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background: rgba(0, 0, 0, 0.35);
+}
+.card .ph {   /* 圖片找不到時的提示 */
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; aspect-ratio: 1 / 1; margin-bottom: 15px;
+    border: 2px dashed rgba(212, 188, 55, 0.6); border-radius: 10px;
+    font-size: 0.9rem; padding: 10px; box-sizing: border-box; word-break: break-all;
+}
+.card h2 { margin: 0 0 6px; color: #d4bf37; letter-spacing: 3px; font-size: 1.5rem; }
+.card p  { margin: 0; text-align: left; overflow-wrap: anywhere; }
+
+/* ---------- 特別角色：彩虹流動發光 ---------- */
+.card.rainbow {
+    border: 3px solid transparent;
+    background:
+        linear-gradient(rgba(25, 18, 12, 0.92), rgba(25, 18, 12, 0.92)) padding-box,
+        linear-gradient(90deg, #ff0040, #ff9900, #ffee00, #33ff66, #00ccff, #6644ff, #ff00cc, #ff0040) border-box;
+    background-size: 100% 100%, 300% 100%;
+    animation: reveal 0.7s cubic-bezier(.2, .8, .2, 1), flow 3s linear infinite 0.7s;
+}
+.card.rainbow::before {   /* 外圈流動光暈 */
+    content: "";
+    position: absolute;
+    inset: -6px;
+    z-index: -1;
+    border-radius: 18px;
+    background: linear-gradient(90deg, #ff0040, #ff9900, #ffee00, #33ff66, #00ccff, #6644ff, #ff00cc, #ff0040);
+    background-size: 300% 100%;
+    filter: blur(14px);
+    opacity: 0.85;
+    animation: flow 3s linear infinite;
+}
+.card.rainbow h2 {
+    background: linear-gradient(90deg, #ff0040, #ff9900, #ffee00, #33ff66, #00ccff, #6644ff, #ff00cc, #ff0040);
+    background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+    animation: flow 3s linear infinite;
+}
+@keyframes flow { to { background-position: 300% 0, 300% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+    .card, .card.rainbow, .card.rainbow::before, .card.rainbow h2 { animation: none; }
+}
+@media (max-width: 768px) { section { padding: 15px; } }
